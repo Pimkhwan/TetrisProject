@@ -1,9 +1,13 @@
 #include <SFML/Graphics.hpp>
+
+#include "Global.hpp"
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	//Window
+	sf::RenderWindow window(sf::VideoMode(2 * CELL_SIZE * COLUMNS * SCREEN_RESIZE, CELL_SIZE * ROWS * SCREEN_RESIZE), "Tetris", sf::Style::Close);
+	//Resizing the window
+	window.setView(sf::View(sf::FloatRect(0, 0, 2 * CELL_SIZE * COLUMNS, CELL_SIZE * ROWS)));
+
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -13,7 +17,6 @@ int main()
 				window.close();
 		}
 		window.clear();
-		window.draw(shape);
 		window.display();
 	}
 	return 0;
