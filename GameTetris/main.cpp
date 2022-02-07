@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 
-#include "Global.hpp"
+#include "header/Global.hpp"
 int main()
 {	
 	//Used to check whether the game is over or not
