@@ -1,7 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <chrono>
 #include <random>
-#include "header/Global.hpp"
+#include "Header/DrawText.hpp"
+#include "Header/Global.hpp"
+#include "Header/GetTetromino.hpp"
+#include "Header/GetWallKickData.hpp"
+
 int main()
 {	
 	//Used to check whether the game is over or not
