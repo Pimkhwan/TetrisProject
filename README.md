@@ -1,7 +1,7 @@
 # TetrisProject
 1.
 
-2.
+2.Kanaphat Prapet 630612095
 
 3.Jirayu Jitprem 630612096
 
