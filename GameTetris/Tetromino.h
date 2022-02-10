@@ -22,4 +22,4 @@ public:
 
 	std::vector<Position> get_ghost_minos(const std::vector<std::vector<unsigned char>>& i_matrix);
 	std::vector<Position> get_minos();
-}
+};
