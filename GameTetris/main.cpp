@@ -1,13 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <chrono>
 #include <random>
-#include "Header/DrawText.hpp"
-#include "Header/Global.hpp"
-#include "Header/GetTetromino.hpp"
-#include "Header/GetWallKickData.hpp"
+#include "DrawText.h"
+#include "Global.h"
+#include "GetTetromino.h"
+#include "GetWallKickData.h"
+#include "Tetromino.h"
 
 int main()
-{	
+{
 	//Used to check whether the game is over or not
 	bool game_over = 0;
 	//Is the hard drop button pressed?
@@ -72,6 +73,16 @@ int main()
 	//Resizing the window
 	window.setView(sf::View(sf::FloatRect(0, 0, 2 * CELL_SIZE * COLUMNS, CELL_SIZE * ROWS)));
 
+	//Falling tetromino. At the start we're gonna give it a random shape
+	Tetromino tetromino(static_cast<unsigned char>(shape_distribution(random_engine)), matrix);
+
+	//Generate a random shape and store it as the next shape
+	next_shape = static_cast<unsigned char>(shape_distribution(random_engine));
+
+	//Get the current time and store it in the variable
+	previous_time = std::chrono::steady_clock::now();
+
+	//While the window is open
 	while (1 == window.isOpen())
 	{
 		//Get the difference in time between the current frame and the previous frame
