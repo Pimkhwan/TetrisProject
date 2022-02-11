@@ -4,7 +4,7 @@
 
 void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text, sf::RenderWindow& i_window)
 {
-	//We're gonna align the text ot the left top
+	//เราจะจัดข้อความให้ชิดซ้ายบน
 	short character_x = i_x;
 	short character_y = i_y;
 
@@ -15,8 +15,8 @@ void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text
 	sf::Texture font_texture;
 	font_texture.loadFromFile("Z:\\Compro\\Font.png");
 
-	//We're gonna calculate the width of the character based on the font image size
-	//96 because there are 96 character in the image
+	//เราจะคำนวณความกว้างของอักขระตามขนาดภาพแบบอักษร
+	//96 เพราะว่านี่คือ 96 ตัวละครในภาพ
 	character_width = font_texture.getSize().x / 96;
 
 	character_sprite.setTexture(font_texture);
@@ -32,15 +32,15 @@ void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text
 			continue;
 		}
 
-		//Change the position of the next character
+		//เปลี่ยนตำแหน่งของตัวละครถัดไป
 		character_sprite.setPosition(character_x, character_y);
-		//Pick the character from the font image
+		//เลือกตัวละครจากภาพฟอนต์
 		character_sprite.setTextureRect(sf::IntRect(character_width * (a - 32), 0, character_width, font_texture.getSize().y));
 
-		//Increase the x-coordinate
+		//เพิ่มพิกัด x
 		character_x += character_width;
 
-		//Draw the character
+		//วาดตัวละคร
 		i_window.draw(character_sprite);
 	}
 }
