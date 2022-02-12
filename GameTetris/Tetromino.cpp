@@ -40,26 +40,26 @@ bool Tetromino::move_down(const std::vector<std::vector<unsigned char>>& i_matri
 			return 0;
 		}
 
-		//Will we hit another tetromino if we move down?
+		//เราจะตี tetromino อีกหรือไม่ถ้าเราเลื่อนลง?
 		if (0 < i_matrix[mino.x][1 + mino.y])
 		{
 			return 0;
 		}
 	}
 
-	//Move the tetromino down
+	//เลื่อน tetromino ลง
 	for (Position& mino : minos)
 	{
 		mino.y++;
 	}
 
-	//Return that everything is okay
+	//กลับมาให้ทุกอย่างโอเค
 	return 1;
 }
 
 bool Tetromino::reset(unsigned char i_shape, const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//Reset the variables
+	//รีเซ็ตตัวแปร
 	rotation = 0;
 	shape = i_shape;
 
