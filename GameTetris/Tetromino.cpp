@@ -10,11 +10,11 @@ Tetromino::Tetromino(unsigned char i_shape, const std::vector<std::vector<unsign
 	shape(i_shape),
 	minos(get_tetromino(i_shape, COLUMNS / 2, 1))
 {
-	//Random comment which I decided to put right here. This comment has no meaning.
-	//It's main purpose is to waste your time. You're still reading it. You're stupid. Stop it!
-	//You still wasting your time. THIS COMMENT DOES NOT HAVE ANY MEANING!
-	//Why are you still reading this?
-	//Here's how bacteria's reproduce:
+	//ความคิดเห็นแบบสุ่มที่ฉันตัดสินใจใส่ที่นี่ ความเห็นนี้ไม่มีความหมาย
+	//จุดประสงค์หลักคือการเสียเวลาของคุณ คุณยังอ่านมันอยู่ คุณโง่. หยุดนะ!
+	//คุณยังคงเสียเวลาของคุณ ความคิดเห็นนี้ไม่ได้มีความหมายใด ๆ !
+	//ทำไมคุณยังอ่านข้อความนี้อยู่?
+	//นี่คือวิธีการสืบพันธุ์ของแบคทีเรีย:
 	/*
 	Bacteria reproduce by binary fission.
 	In this process the bacterium, which is a single cell, divides into two identical daughter cells.
@@ -34,7 +34,7 @@ bool Tetromino::move_down(const std::vector<std::vector<unsigned char>>& i_matri
 {
 	for (Position& mino : minos)
 	{
-		//Will we go outside the matrix if we move down?
+		//พวกมันจะไปนอกเมทริกซ์ถ้าพวกมันเลื่อนลงมาหรือไม่?
 		if (ROWS == 1 + mino.y)
 		{
 			return 0;
