@@ -10,47 +10,47 @@
 
 int main()
 {
-	//Used to check whether the game is over or not
+	//ใช้เช็คว่าจบเกมหรือไม่
 	bool game_over = 0;
-	//Is the hard drop button pressed?
+	//ปุ่มฮาร์ดดรอปถูกกดหรือไม่
 	bool hard_drop_pressed = 0;
-	//Is the rotate button pressed?
+	//กดปุ่มหมุนหรือไม่?
 	bool rotate_pressed = 0;
 
-	//Used to make the game framerate-independent
+	//ใช้เพื่อทำให้เฟรมเรทของเกมเป็นอิสระ
 	unsigned lag = 0;
-	//How many lines the player cleared?
+	//ผู้เล่นเคลียร์กี่บรรทัด?
 	unsigned lines_cleared = 0;
 
-	//Timer for the line clearing effect
+	//ตัวจับเวลาสำหรับเอฟเฟกต์การล้างเส้น
 	unsigned char clear_effect_timer = 0;
-	//Gee, I wonder what this is
+	//กำหนดค่า current_fall_speed = START_FALL_SPEED
 	unsigned char current_fall_speed = START_FALL_SPEED;
-	//Timer for the tetromino falling
+	//จับเวลาสำหรับ tetromino ล้ม
 	unsigned char fall_timer = 0;
-	//Timer for the tetromino moving horizontally
+	//ตัวจับเวลาสำหรับ tetromino เคลื่อนที่ในแนวนอน
 	unsigned char move_timer = 0;
-	//Next shape (The shape that comes after the current shape)
+	//รูปร่างถัดไป (รูปร่างที่มาหลังรูปร่างปัจจุบัน)
 	unsigned char next_shape;
-	//Timer for the tetromino's soft drop
+	//ตัวจับเวลาสำหรับ soft drop tetromino
 	unsigned char soft_drop_timer = 0;
 
-	//Similar to lag, used to make the game framerate-independent
+	//คล้ายกับแลค ใช้เพื่อทำให้เฟรมเรทของเกมเป็นอิสระ
 	std::chrono::time_point<std::chrono::steady_clock> previous_time;
 
-	//I don't really know what this does, so I'm gonna assume this is a random device
+	//สุ่มอุปกรณ์
 	std::random_device random_device;
 
 	//Random engine
 	std::default_random_engine random_engine(random_device());
 
-	//I KNOW THIS ONE! Distribution of all the shapes. We're gonna randomly choose one from them
+	//กระจายทุกรูปทรง เราจะสุ่มเลือก
 	std::uniform_int_distribution<unsigned short> shape_distribution(0, 6);
 
-	//Stores the current state of each row. Whether they need to be cleared or not
+	//เก็บสถานะปัจจุบันของแต่ละแถว ไม่ว่าจะต้องเคลียร์หรือไม่
 	std::vector<bool> clear_lines(ROWS, 0);
 
-	//All the colors for the cells
+	//รหัสสีสำหรับเซลล์
 	std::vector<sf::Color> cell_colors = {
 		sf::Color(36, 36, 85),
 		sf::Color(0, 219, 255),
@@ -63,24 +63,24 @@ int main()
 		sf::Color(73, 73, 85)
 	};
 
-	//Game matrix. Everything will happen to this matrix
+	//เกมเมทริกซ์ ทุกอย่างจะเกิดขึ้นกับเมทริกซ์นี้
 	std::vector<std::vector<unsigned char>> matrix(COLUMNS, std::vector<unsigned char>(ROWS));
 
-	//SFML thing. Stores events, I think
+	//SFML store event
 	sf::Event event;
 
-	//Window
+	//วินโดว์
 	sf::RenderWindow window(sf::VideoMode(2 * CELL_SIZE * COLUMNS * SCREEN_RESIZE, CELL_SIZE * ROWS * SCREEN_RESIZE), "Tetris", sf::Style::Close);
-	//Resizing the window
+	//การปรับขนาดหน้าต่าง
 	window.setView(sf::View(sf::FloatRect(0, 0, 2 * CELL_SIZE * COLUMNS, CELL_SIZE * ROWS)));
 
-	//Falling tetromino. At the start we're gonna give it a random shape
+	//tetromino ที่ตกมาในตอนแรกเราจะสุ่มรูปร่างให้
 	Tetromino tetromino(static_cast<unsigned char>(shape_distribution(random_engine)), matrix);
 
-	//Generate a random shape and store it as the next shape
+	//สร้างรูปร่างแบบสุ่มและจัดเก็บเป็นรูปร่างถัดไป
 	next_shape = static_cast<unsigned char>(shape_distribution(random_engine));
 
-	//Get the current time and store it in the variable
+	//รับเวลาปัจจุบันและเก็บไว้ในตัวแปร
 	previous_time = std::chrono::steady_clock::now();
 
 	//While the window is open
