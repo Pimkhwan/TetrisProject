@@ -69,30 +69,30 @@ bool Tetromino::reset(unsigned char i_shape, const std::vector<std::vector<unsig
 	{
 		if (0 < i_matrix[mino.x][mino.y])
 		{
-			//Return that we can't reset because there's a tetromino at the spawn location
+			//กลับมาที่เราไม่สามารถรีเซ็ตได้เพราะมีเทโทรมิโนอยู่ที่ตำแหน่งเริ่มต้น
 			return 0;
 		}
 	}
 
-	//Return that everything is fine
+	//กลับมาว่าทุกอย่างเรียบร้อย
 	return 1;
 }
 
 unsigned char Tetromino::get_shape()
 {
-	//I'm gonna take a wild guess and say that this return the shape of the tetromino
+	//ฉันจะลองเดาดูและบอกว่านี่จะคืนรูปร่างของ tetromino
 	return shape;
 }
 
 void Tetromino::hard_drop(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//I'm so smart. I used the ghost tetromino function to make the hard drop function
+	//ฉันฉลาดมาก ฉันใช้ฟังก์ชัน ghost tetromino เพื่อสร้างฟังก์ชันฮาร์ดดร็อป
 	minos = get_ghost_minos(i_matrix);
 }
 
 void Tetromino::move_left(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//This is similar to the move down function so I'm not gonna explain anything here. Bite me!
+	//มันคล้ายกับฟังก์ชั่นเลื่อนลง ดังนั้นฉันจะไม่อธิบายอะไรที่นี่ กัดฉัน!
 	for (Position& mino : minos)
 	{
 		if (0 > mino.x - 1)
@@ -118,7 +118,7 @@ void Tetromino::move_left(const std::vector<std::vector<unsigned char>>& i_matri
 
 void Tetromino::move_right(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//Hello!
+	//สวัสดี!
 	for (Position& mino : minos)
 	{
 		if (COLUMNS == 1 + mino.x)
