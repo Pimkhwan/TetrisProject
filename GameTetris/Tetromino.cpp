@@ -144,14 +144,14 @@ void Tetromino::move_right(const std::vector<std::vector<unsigned char>>& i_matr
 
 void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//I don't even wanna explain this. I spent way too much time writing this
+	//ฉันไม่อยากอธิบายเรื่องนี้ ฉันใช้เวลามากเกินไปในการเขียนสิ่งนี้
 	if (3 != shape)
 	{
 		unsigned char next_rotation;
 
 		std::vector<Position> current_minos = minos;
 
-		//Calculating the next rotation state
+		//กำลังคำนวณสถานะการหมุนครั้งต่อไป
 		if (0 == i_clockwise)
 		{
 			next_rotation = (3 + rotation) % 4;
@@ -161,7 +161,7 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 			next_rotation = (1 + rotation) % 4;
 		}
 
-		//If it's the I shape
+		//ถ้าเป็นรูปตัวฉัน
 		if (0 == shape)
 		{
 			//We find it's center
@@ -194,10 +194,10 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 			}
 			}
 
-			//Then we rotate every mino based on the center
+			//จากนั้นเราจะหมุนทุก mino ตามศูนย์
 			for (Position& mino : minos)
 			{
-				//We find the position of the mino relative to the center
+				//เราหาตำแหน่งของมิโนที่สัมพันธ์กับจุดศูนย์กลาง
 				float x = mino.x - center_x;
 				float y = mino.y - center_y;
 
@@ -215,10 +215,10 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 		}
 		else
 		{
-			//We don't rotate the mino that's located at the center of rotation
+			//เราไม่หมุนมิโนที่อยู่ตรงกลางการหมุน
 			for (unsigned char a = 1; a < minos.size(); a++)
 			{
-				//We find the position of the mino relative to the central mino
+				//เราหาตำแหน่งของ mino ที่สัมพันธ์กับ mino ส่วนกลาง
 				char x = minos[a].x - minos[0].x;
 				char y = minos[a].y - minos[0].y;
 
@@ -235,14 +235,14 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 			}
 		}
 
-		//We try every vector from the wall kick data
+		//เราลองเวกเตอร์ทุกตัวจากข้อมูลการเตะกำแพง
 		for (Position& wall_kick : get_wall_kick_data(0 == shape, rotation, next_rotation))
 		{
 			bool can_turn = 1;
 
 			for (Position& mino : minos)
 			{
-				//Here we're checking every collision that can happen
+				//เราตรวจสอบทุกการชนที่อาจเกิดขึ้น
 				if (0 > mino.x + wall_kick.x || COLUMNS <= mino.x + wall_kick.x || ROWS <= mino.y + wall_kick.y)
 				{
 					can_turn = 0;
@@ -262,10 +262,10 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 				}
 			}
 
-			//If we can turn
+			//ถ้าฉันสามารถหัน
 			if (1 == can_turn)
 			{
-				//We turn
+				//เราหัน
 				rotation = next_rotation;
 
 				for (Position& mino : minos)
@@ -278,14 +278,14 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 			}
 		}
 
-		//Since we applied changes to the minos array, we're resetting it when we can't rotate the tetromino
+		//เนื่องจากเราใช้การเปลี่ยนแปลงกับอาร์เรย์ minos เราจึงรีเซ็ตเมื่อเราไม่สามารถหมุน tetromino
 		minos = current_minos;
 	}
 }
 
 void Tetromino::update_matrix(std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//Putting the tetromino to the matrix
+	//การใส่ tetromino ให้กับเมทริกซ์
 	for (Position& mino : minos)
 	{
 		if (0 > mino.y)
@@ -299,7 +299,7 @@ void Tetromino::update_matrix(std::vector<std::vector<unsigned char>>& i_matrix)
 
 std::vector<Position> Tetromino::get_ghost_minos(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//We're just moving the tetromino down until it hits something. Then we're returning it's position
+	//เราแค่ขยับเทโทรมิโนลงไป จนกว่ามันจะกระทบอะไรบางอย่าง แล้วเราก็คืนตำแหน่ง
 	bool keep_falling = 1;
 
 	unsigned char total_movement = 0;
@@ -342,6 +342,6 @@ std::vector<Position> Tetromino::get_ghost_minos(const std::vector<std::vector<u
 
 std::vector<Position> Tetromino::get_minos()
 {
-	//Return minos (I'm so good at explaining stuff!)
+	//คืนไมนอส (ฉันอธิบายได้เก่งมาก!)
 	return minos;
 }
