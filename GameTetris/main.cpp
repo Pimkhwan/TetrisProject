@@ -104,53 +104,53 @@ int main()
 			//Looping through the events
 			while (1 == window.pollEvent(event))
 			{
-				//Check the event type
+				//เช็คชนิด event
 				switch (event.type)
 				{
-					//If the user closed the game
+					//เคศยูสเซอร์ปิดตัวเกม
 				case sf::Event::Closed:
 				{
-					//Close the window
+					//ปิดวินโดว์
 					window.close();
 
 					break;
 				}
-				//If the key has been released
+				//เคส key 
 				case sf::Event::KeyReleased:
 				{
-					//Check which key was released
+					//เช็คว่า key อะไร
 					switch (event.key.code)
 					{
-						//If it's C or Z
+						//เคส C or Z
 					case sf::Keyboard::C:
 					case sf::Keyboard::Z:
 					{
-						//Rotation key is not pressed anymore
+						//เซ็ตปุ่มหมุน
 						rotate_pressed = 0;
 
 						break;
 					}
-					//If it's Down
+					//เคสปุ่ม Down
 					case sf::Keyboard::Down:
 					{
-						//Reset the soft drop timer
+						//รีเซ็ตตัวจับเวลาแบบซอฟต์ดร็อป
 						soft_drop_timer = 0;
 
 						break;
 					}
-					//If it's Left or Right
+					//เคส key ซ้ายหรือขวา
 					case sf::Keyboard::Left:
 					case sf::Keyboard::Right:
 					{
-						//Reset the move timer
+						//รีเซ็ตตัวจับเวลาการย้าย
 						move_timer = 0;
 
 						break;
 					}
-					//If it's Space
+					//เคสปุ่ม space
 					case sf::Keyboard::Space:
 					{
-						//Hard drop key is not pressed anymore
+						//ปุ่มฮาร์ดดรอปไม่ได้ถูกกด
 						hard_drop_pressed = 0;
 					}
 					}
@@ -213,24 +213,24 @@ int main()
 						move_timer = (1 + move_timer) % MOVE_SPEED;
 					}
 
-					//If hard drop is not pressed
+					//ถ้า hard drop ไม่ได้ถูกกด
 					if (0 == hard_drop_pressed)
 					{
-						//But the Space is pressed, which is the hard drop key (Paradox?)
+						//แต่กด Space แล้วอันไหนคือคีย์ฮาร์ดดร็อป (Paradox?)
 						if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 						{
-							//Get rid of the paradox!
+							//กำหนดค่า hard drop!
 							hard_drop_pressed = 1;
 
-							//Reset the fall timer
+							//รีเซ็ตค่า fall timer
 							fall_timer = current_fall_speed;
 
-							//Make the falling tetromino drop HAAAAARD!
+							//ทำให้ tetromino ร่วงหล่น HAAAAARD!
 							tetromino.hard_drop(matrix);
 						}
 					}
 
-					//I don't wanna rewrite the same thing again so just look at the comments above and use your head
+					//คล้าย hard drop แต่เปลี่ยนเป็น soft drop
 					if (0 == soft_drop_timer)
 					{
 						if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
@@ -496,10 +496,8 @@ int main()
 				//Drawing the text
 				draw_text(static_cast<unsigned short>(CELL_SIZE * (0.5f + COLUMNS)), static_cast<unsigned short>(0.5f * CELL_SIZE * ROWS), "Lines:" + std::to_string(lines_cleared) + "\nSpeed:" + std::to_string(START_FALL_SPEED / current_fall_speed) + 'x', window);
 		
-				//Last comment in this document!
 				window.display();
 				
-				//Jk, THIS is the last comment in this document
 			}
 		}
 	}
