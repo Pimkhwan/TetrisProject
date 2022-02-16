@@ -368,7 +368,6 @@ int main()
 						}
 					}
 
-					//I already explained this earlier and I don't wanna do it again
 					game_over = 0 == tetromino.reset(next_shape, matrix);
 
 					next_shape = static_cast<unsigned char>(shape_distribution(random_engine));
@@ -378,7 +377,7 @@ int main()
 				}
 			}
 
-			//Here we're drawing everything!
+			//drawing everything
 			if (FRAME_DURATION > lag)
 			{
 				//Calculating the size of the effect squares
