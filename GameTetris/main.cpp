@@ -7,6 +7,7 @@
 #include "GetTetromino.h"
 #include "GetWallKickData.h"
 #include "Tetromino.h"
+#include "Menu.h"
 
 int main()
 {
@@ -72,6 +73,9 @@ int main()
 	//วินโดว์
 	sf::RenderWindow window(sf::VideoMode(2 * CELL_SIZE * COLUMNS * SCREEN_RESIZE, CELL_SIZE * ROWS * SCREEN_RESIZE), "Tetris", sf::Style::Close);
 	//การปรับขนาดหน้าต่าง
+
+	Menu menu(window.getSize().x, window.getSize().y);
+
 	window.setView(sf::View(sf::FloatRect(0, 0, 2 * CELL_SIZE * COLUMNS, CELL_SIZE * ROWS)));
 
 	//tetromino ที่ตกมาในตอนแรกเราจะสุ่มรูปร่างให้
@@ -106,7 +110,13 @@ int main()
 			{
 				//เช็คชนิด event
 				switch (event.type)
-				{
+				{	
+					{
+					default:
+						break;
+					}
+					break;
+
 					//เคศยูสเซอร์ปิดตัวเกม
 				case sf::Event::Closed:
 				{
