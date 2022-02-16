@@ -82,26 +82,26 @@ int main()
 
 	//รับเวลาปัจจุบันและเก็บไว้ในตัวแปร
 	previous_time = std::chrono::steady_clock::now();
-
+		
 	//While the window is open
 	while (1 == window.isOpen())
-	{
-		//Get the difference in time between the current frame and the previous frame
+	{		
+		//รับความแตกต่างของเวลาระหว่างเฟรมปัจจุบันและเฟรมก่อนหน้า
 		unsigned delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
 
-		//Add the difference to the lag
+		//Add the difference to the lag 
 		lag += delta_time;
 
-		//In other words, we're updating the current time for the next frame.
+		//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
 		previous_time += std::chrono::microseconds(delta_time);
 
 		//While the lag exceeds the maximum allowed frame duration
 		while (FRAME_DURATION <= lag)
 		{
-			//Subtract the right thing from the left thing
+			//ลบ thing ด้านขวา ออกจากสิ่งด้านซ้าย
 			lag -= FRAME_DURATION;
-
-			//Looping through the events
+		
+			//Loop events
 			while (1 == window.pollEvent(event))
 			{
 				//เช็คชนิด event
@@ -158,19 +158,19 @@ int main()
 				}
 			}
 
-			//If the clear effect timer is 0
+			//ถ้า clear effect timer == 0
 			if (0 == clear_effect_timer)
 			{
-				//If the game over is 0
+				//ถ้า game over == 0
 				if (0 == game_over)
 				{
-					//If the rotate pressed is 0 (Damn, I'm so good at commenting!)
+					//ถ้า rotate pressed == 0 
 					if (0 == rotate_pressed)
 					{
-						//If the C is pressed
+						//ถ้า C is pressed
 						if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 						{
-							//Rotation key is pressed!
+							//Rotation key is pressed
 							rotate_pressed = 1;
 
 							//Do a barrel roll
@@ -186,10 +186,10 @@ int main()
 						}
 					}
 
-					//If the move timer is 0
+					//ถ้า move timer == 0
 					if (0 == move_timer)
 					{
-						//If the Left is pressed
+						//ถ้า the Left is pressed
 						if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 						{
 							//Reset the move timer
@@ -247,10 +247,10 @@ int main()
 						soft_drop_timer = (1 + soft_drop_timer) % SOFT_DROP_SPEED;
 					}
 
-					//If the fall timer is over
+					//ถ้า timer is over
 					if (current_fall_speed == fall_timer)
 					{
-						//If the tetromino can't move down anymore
+						//ถ้า the tetromino can't move down anymore
 						if (0 == tetromino.move_down(matrix))
 						{
 							//Put the falling tetromino to the matrix
@@ -259,7 +259,7 @@ int main()
 							//Loop through every row
 							for (unsigned char a = 0; a < ROWS; a++)
 							{
-								//Here we're gonna check if the current row should be cleared or not
+								//check if the current row should be cleared or not
 								bool clear_line = 1;
 
 								//Check if the every cell in the row is filled or not
@@ -273,7 +273,7 @@ int main()
 									}
 								}
 
-								//If we have to clear it
+								//clear line 
 								if (1 == clear_line)
 								{
 									//WE CLEAR IT!
@@ -283,13 +283,13 @@ int main()
 									//Then we start the effect timer
 									clear_effect_timer = CLEAR_EFFECT_DURATION;
 
-									//Set the current row as the row that should be cleared
+									//ตั้งค่าแถวปัจจุบันเป็นแถวที่ถูกล้าง
 									clear_lines[a] = 1;
 
 									//If the player reached a certain number of lines
 									if (0 == lines_cleared % LINES_TO_INCREASE_SPEED)
 									{
-										//We increase the game speed
+										//increase the game speed
 										current_fall_speed = std::max<unsigned char>(SOFT_DROP_SPEED, current_fall_speed - 1);
 									}
 								}
@@ -325,13 +325,13 @@ int main()
 
 					lines_cleared = 0;
 
-					//Except the current fall speed because he's a special boy
+					//Except the current fall speed 
 					current_fall_speed = START_FALL_SPEED;
 					fall_timer = 0;
 					move_timer = 0;
 					soft_drop_timer = 0;
 
-					//Then we clear the matrix
+					//clear the matrix
 					for (std::vector<unsigned char>& a : matrix)
 					{
 						std::fill(a.begin(), a.end(), 0);
@@ -493,7 +493,7 @@ int main()
 					window.draw(cell);
 				}
 
-				//Drawing the text
+				//draw text
 				draw_text(static_cast<unsigned short>(CELL_SIZE * (0.5f + COLUMNS)), static_cast<unsigned short>(0.5f * CELL_SIZE * ROWS), "Lines:" + std::to_string(lines_cleared) + "\nSpeed:" + std::to_string(START_FALL_SPEED / current_fall_speed) + 'x', window);
 		
 				window.display();
