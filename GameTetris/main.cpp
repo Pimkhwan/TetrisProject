@@ -315,7 +315,7 @@ int main()
 						//Increment the fall timer
 						fall_timer++;
 					}
-				} //This is the code for restarting the game
+				} //restarting the game
 				else if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				{
 					//We set everything to 0
@@ -340,7 +340,7 @@ int main()
 			}
 			else
 			{
-				//Decrement the effect timer
+				//ลด effect timer
 				clear_effect_timer--;
 
 				//If the effect timer is between 1 and -1
