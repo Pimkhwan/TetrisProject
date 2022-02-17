@@ -9,7 +9,7 @@ class Menu
 
 		void drawMenu(sf::RenderWindow& window);
 		void MoveUp();
-		void Movedown();
+		void MoveDown();
 		int GetPressedItem() { return selectedItem; }
 	private:
 		int selectedItem;
