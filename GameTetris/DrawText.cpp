@@ -13,7 +13,7 @@ void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text
 	sf::Sprite character_sprite;
 
 	sf::Texture font_texture;
-	font_texture.loadFromFile("Z:\\Compro\\Font.png");
+	font_texture.loadFromFile("Font/Font.png");
 
 	//เราจะคำนวณความกว้างของอักขระตามขนาดภาพแบบอักษร
 	//96 เพราะว่านี่คือ 96 ตัวละครในภาพ
@@ -44,3 +44,4 @@ void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text
 		i_window.draw(character_sprite);
 	}
 }
+
