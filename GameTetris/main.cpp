@@ -1,6 +1,8 @@
 #include <chrono>
 #include <random>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
 
 #include "DrawText.h"
 #include "Global.h"
@@ -74,7 +76,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(2 * CELL_SIZE * COLUMNS * SCREEN_RESIZE, CELL_SIZE * ROWS * SCREEN_RESIZE), "Tetris", sf::Style::Close);
 	//การปรับขนาดหน้าต่าง
 
-	Menu menu(window.getSize().x, window.getSize().y);
+	//Menu menu(window.getSize().x, window.getSize().y);
 
 	window.setView(sf::View(sf::FloatRect(0, 0, 2 * CELL_SIZE * COLUMNS, CELL_SIZE * ROWS)));
 
@@ -86,6 +88,18 @@ int main()
 
 	//รับเวลาปัจจุบันและเก็บไว้ในตัวแปร
 	previous_time = std::chrono::steady_clock::now();
+	
+	//sound
+	sf::SoundBuffer music1;
+	if (!music1.loadFromFile("Sound/A Night Of Dizzy Spells.wav")) {
+		std::cout << "error" << std::endl;
+	}
+	sf::Sound music;
+
+	music.setBuffer(music1);
+	music.setVolume(40.f);
+	music.setLoop(true);
+	music.play();
 		
 	//While the window is open
 	while (1 == window.isOpen())
@@ -98,6 +112,8 @@ int main()
 
 		//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
 		previous_time += std::chrono::microseconds(delta_time);
+
+
 
 		//While the lag exceeds the maximum allowed frame duration
 		while (FRAME_DURATION <= lag)
@@ -506,6 +522,7 @@ int main()
 				draw_text(static_cast<unsigned short>(CELL_SIZE * (0.5f + COLUMNS)), static_cast<unsigned short>(0.5f * CELL_SIZE * ROWS), "Lines:" + std::to_string(lines_cleared) + "\nSpeed:" + std::to_string(START_FALL_SPEED / current_fall_speed) + 'x', window);
 		
 				window.display();
+				//music.stop();
 				
 			}
 		}
