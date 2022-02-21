@@ -145,11 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DrawText.cpp" />
+    <ClCompile Include="DrawTextcpp.cpp" />
     <ClCompile Include="GetTetromino.cpp" />
     <ClCompile Include="GetWallKickData.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Tetromino.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,8 +156,10 @@
     <ClInclude Include="GetTetromino.h" />
     <ClInclude Include="GetWallKickData.h" />
     <ClInclude Include="Global.h" />
-    <ClInclude Include="Menu.h" />
     <ClInclude Include="Tetromino.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\Tetris-Main\Source\Resources\Images\Font.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

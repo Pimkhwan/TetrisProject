@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{1ade81a1-2a93-4c86-8dbd-8458365093c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -21,16 +24,13 @@
     <ClCompile Include="GetWallKickData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DrawText.cpp">
+    <ClCompile Include="DrawTextcpp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GetTetromino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Tetromino.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,8 +50,10 @@
     <ClInclude Include="Tetromino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\Tetris-Main\Source\Resources\Images\Font.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

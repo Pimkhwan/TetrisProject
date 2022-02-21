@@ -5,10 +5,10 @@
 
 std::vector<Position> get_tetromino(unsigned char i_shape, unsigned char i_x, unsigned char i_y)
 {
-	//เซ็ต vector 
+	//I'm pretty sure the code is self-explanatory
 	std::vector<Position> output_tetromino(4);
 
-	//กำหนดตำแหน่งสัมพัทธ์ทุกรูปร่าง
+	//We just set the relative position for every mino
 	switch (i_shape)
 	{
 	case 0:
@@ -74,13 +74,13 @@ std::vector<Position> get_tetromino(unsigned char i_shape, unsigned char i_x, un
 	}
 	}
 
-	//จากนั้นเราบวก x และ y ให้ตัว tetromino
+	//Then we add the given x and y to the minos
 	for (Position& mino : output_tetromino)
 	{
 		mino.x += i_x;
 		mino.y += i_y;
 	}
 
-	//Return ตัว tetromino
+	//Return the tetromino
 	return output_tetromino;
 }

@@ -1,5 +1,5 @@
 # TetrisProject
-1.Rom Saejao 630610755
+1.
 
 2.Kanaphat Prapet 630612095
 

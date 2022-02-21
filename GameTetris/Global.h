@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 
 //The size of the cell
 constexpr unsigned char CELL_SIZE = 8;
