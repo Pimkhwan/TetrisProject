@@ -10,55 +10,39 @@ Tetromino::Tetromino(unsigned char i_shape, const std::vector<std::vector<unsign
 	shape(i_shape),
 	minos(get_tetromino(i_shape, COLUMNS / 2, 1))
 {
-	//Random comment which I decided to put right here. This comment has no meaning.
-	//It's main purpose is to waste your time. You're still reading it. You're stupid. Stop it!
-	//You still wasting your time. THIS COMMENT DOES NOT HAVE ANY MEANING!
-	//Why are you still reading this?
-	//Here's how bacteria's reproduce:
-	/*
-	Bacteria reproduce by binary fission.
-	In this process the bacterium, which is a single cell, divides into two identical daughter cells.
-	Binary fission begins when the DNA of the bacterium divides into two (replicates).
-	The bacterial cell then elongates and splits into two daughter cells each with identical DNA to the parent cell.
-	Each daughter cell is a clone of the parent cell.
-	When conditions are favourable such as the right temperatureand nutrients are available,
-	some bacteria like Escherichia coli can I can't believe you're still reading this. Get a life! divide every 20 minutes.
-	This means that in just seven hours one bacterium can generate 2, 097, 152 bacteria.
-	After one more hour the number of bacteria will have risen to a colossal 16, 777, 216.
-	That's why we can quickly become ill when pathogenic microbes invade our bodies.
-	*/
+	
 }
 
 bool Tetromino::move_down(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
 	for (Position& mino : minos)
 	{
-		//Will we go outside the matrix if we move down?
+		//พวกมันจะไปนอกเมทริกซ์ถ้าพวกมันเลื่อนลงมาหรือไม่?
 		if (ROWS == 1 + mino.y)
 		{
 			return 0;
 		}
 
-		//Will we hit another tetromino if we move down?
+		//เราจะตี tetromino อีกหรือไม่ถ้าเราเลื่อนลง?
 		if (0 < i_matrix[mino.x][1 + mino.y])
 		{
 			return 0;
 		}
 	}
 
-	//Move the tetromino down
+	//เลื่อน tetromino ลง
 	for (Position& mino : minos)
 	{
 		mino.y++;
 	}
 
-	//Return that everything is okay
+	//กลับมาให้ทุกอย่างโอเค
 	return 1;
 }
 
 bool Tetromino::reset(unsigned char i_shape, const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//Reset the variables
+	//รีเซ็ตตัวแปร
 	rotation = 0;
 	shape = i_shape;
 
@@ -68,30 +52,30 @@ bool Tetromino::reset(unsigned char i_shape, const std::vector<std::vector<unsig
 	{
 		if (0 < i_matrix[mino.x][mino.y])
 		{
-			//Return that we can't reset because there's a tetromino at the spawn location
+			//กลับมาที่เราไม่สามารถรีเซ็ตได้เพราะมีเทโทรมิโนอยู่ที่ตำแหน่งเริ่มต้น
 			return 0;
 		}
 	}
 
-	//Return that everything is fine
+	//กลับมาว่าทุกอย่างเรียบร้อย
 	return 1;
 }
 
 unsigned char Tetromino::get_shape()
 {
-	//I'm gonna take a wild guess and say that this return the shape of the tetromino
+	//ฉันจะลองเดาดูและบอกว่านี่จะคืนรูปร่างของ tetromino
 	return shape;
 }
 
 void Tetromino::hard_drop(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//I'm so smart. I used the ghost tetromino function to make the hard drop function
+	//ฉันฉลาดมาก ฉันใช้ฟังก์ชัน ghost tetromino เพื่อสร้างฟังก์ชันฮาร์ดดร็อป
 	minos = get_ghost_minos(i_matrix);
 }
 
 void Tetromino::move_left(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//This is similar to the move down function so I'm not gonna explain anything here. Bite me!
+	//มันคล้ายกับฟังก์ชั่นเลื่อนลง ดังนั้นฉันจะไม่อธิบายอะไรที่นี่ กัดฉัน!
 	for (Position& mino : minos)
 	{
 		if (0 > mino.x - 1)
@@ -117,7 +101,7 @@ void Tetromino::move_left(const std::vector<std::vector<unsigned char>>& i_matri
 
 void Tetromino::move_right(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//Hello!
+	//สวัสดี!
 	for (Position& mino : minos)
 	{
 		if (COLUMNS == 1 + mino.x)
@@ -143,14 +127,14 @@ void Tetromino::move_right(const std::vector<std::vector<unsigned char>>& i_matr
 
 void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//I don't even wanna explain this. I spent way too much time writing this
+	//ฉันไม่อยากอธิบายเรื่องนี้ ฉันใช้เวลามากเกินไปในการเขียนสิ่งนี้
 	if (3 != shape)
 	{
 		unsigned char next_rotation;
 
 		std::vector<Position> current_minos = minos;
 
-		//Calculating the next rotation state
+		//กำลังคำนวณสถานะการหมุนครั้งต่อไป
 		if (0 == i_clockwise)
 		{
 			next_rotation = (3 + rotation) % 4;
@@ -160,7 +144,7 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 			next_rotation = (1 + rotation) % 4;
 		}
 
-		//If it's the I shape
+		//ถ้าเป็นรูปตัวฉัน
 		if (0 == shape)
 		{
 			//We find it's center
@@ -193,10 +177,10 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 			}
 			}
 
-			//Then we rotate every mino based on the center
+			//จากนั้นเราจะหมุนทุก mino ตามศูนย์
 			for (Position& mino : minos)
 			{
-				//We find the position of the mino relative to the center
+				//เราหาตำแหน่งของมิโนที่สัมพันธ์กับจุดศูนย์กลาง
 				float x = mino.x - center_x;
 				float y = mino.y - center_y;
 
@@ -214,10 +198,10 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 		}
 		else
 		{
-			//We don't rotate the mino that's located at the center of rotation
+			//เราไม่หมุนมิโนที่อยู่ตรงกลางการหมุน
 			for (unsigned char a = 1; a < minos.size(); a++)
 			{
-				//We find the position of the mino relative to the central mino
+				//เราหาตำแหน่งของ mino ที่สัมพันธ์กับ mino ส่วนกลาง
 				char x = minos[a].x - minos[0].x;
 				char y = minos[a].y - minos[0].y;
 
@@ -234,14 +218,14 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 			}
 		}
 
-		//We try every vector from the wall kick data
+		//เราลองเวกเตอร์ทุกตัวจากข้อมูลการเตะกำแพง
 		for (Position& wall_kick : get_wall_kick_data(0 == shape, rotation, next_rotation))
 		{
 			bool can_turn = 1;
 
 			for (Position& mino : minos)
 			{
-				//Here we're checking every collision that can happen
+				//เราตรวจสอบทุกการชนที่อาจเกิดขึ้น
 				if (0 > mino.x + wall_kick.x || COLUMNS <= mino.x + wall_kick.x || ROWS <= mino.y + wall_kick.y)
 				{
 					can_turn = 0;
@@ -261,10 +245,10 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 				}
 			}
 
-			//If we can turn
+			//ถ้าฉันสามารถหัน
 			if (1 == can_turn)
 			{
-				//We turn
+				//เราหัน
 				rotation = next_rotation;
 
 				for (Position& mino : minos)
@@ -277,14 +261,14 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 			}
 		}
 
-		//Since we applied changes to the minos array, we're resetting it when we can't rotate the tetromino
+		//เนื่องจากเราใช้การเปลี่ยนแปลงกับอาร์เรย์ minos เราจึงรีเซ็ตเมื่อเราไม่สามารถหมุน tetromino
 		minos = current_minos;
 	}
 }
 
 void Tetromino::update_matrix(std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//Putting the tetromino to the matrix
+	//การใส่ tetromino ให้กับเมทริกซ์
 	for (Position& mino : minos)
 	{
 		if (0 > mino.y)
@@ -298,7 +282,7 @@ void Tetromino::update_matrix(std::vector<std::vector<unsigned char>>& i_matrix)
 
 std::vector<Position> Tetromino::get_ghost_minos(const std::vector<std::vector<unsigned char>>& i_matrix)
 {
-	//We're just moving the tetromino down until it hits something. Then we're returning it's position
+	//เราแค่ขยับเทโทรมิโนลงไป จนกว่ามันจะกระทบอะไรบางอย่าง แล้วเราก็คืนตำแหน่ง
 	bool keep_falling = 1;
 
 	unsigned char total_movement = 0;
@@ -341,6 +325,6 @@ std::vector<Position> Tetromino::get_ghost_minos(const std::vector<std::vector<u
 
 std::vector<Position> Tetromino::get_minos()
 {
-	//Return minos (I'm so good at explaining stuff!)
+	//คืนไมนอส (ฉันอธิบายได้เก่งมาก!)
 	return minos;
 }
