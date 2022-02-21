@@ -4,7 +4,7 @@
 
 void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text, sf::RenderWindow& i_window)
 {
-	//เราจะจัดข้อความให้ชิดซ้ายบน
+	//��ҨШѴ��ͤ������Դ���º�
 	short character_x = i_x;
 	short character_y = i_y;
 
@@ -15,8 +15,9 @@ void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text
 	sf::Texture font_texture;
 	font_texture.loadFromFile("Font/Font.png");
 
-	//เราจะคำนวณความกว้างของอักขระตามขนาดภาพแบบอักษร
-	//96 เพราะว่านี่คือ 96 ตัวละครในภาพ
+	//��ҨФӹǳ�������ҧ�ͧ�ѡ��е����Ҵ�ҾẺ�ѡ��
+	//96 ������ҹ���� 96 ����Ф���Ҿ
+
 	character_width = font_texture.getSize().x / 96;
 
 	character_sprite.setTexture(font_texture);
@@ -32,16 +33,15 @@ void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text
 			continue;
 		}
 
-		//เปลี่ยนตำแหน่งของตัวละครถัดไป
+		//����¹���˹觢ͧ����ФöѴ�
 		character_sprite.setPosition(character_x, character_y);
-		//เลือกตัวละครจากภาพฟอนต์
+		//���͡����Фèҡ�Ҿ�͹��
 		character_sprite.setTextureRect(sf::IntRect(character_width * (a - 32), 0, character_width, font_texture.getSize().y));
 
-		//เพิ่มพิกัด x
+		//�����ԡѴ x
 		character_x += character_width;
 
-		//วาดตัวละคร
+		//�Ҵ����Ф�
 		i_window.draw(character_sprite);
 	}
 }
-
