@@ -16,7 +16,7 @@ Menu::Menu(float width, float height) {
 
 	menu[1].setFont(font);
 	menu[1].setFillColor(sf::Color::White);
-	menu[1].setString("Options");
+	menu[1].setString("How to play");
 	menu[1].setCharacterSize(24);
 	menu[1].setOrigin(menu[0].getLocalBounds().width / 2, menu[0].getLocalBounds().height / 2);
 	menu[1].setPosition(sf::Vector2f(width / 1.55, height / (MAX_ITEM + 1) * 2));
