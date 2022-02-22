@@ -13,73 +13,26 @@
 
 int main()
 {
+	//จำนวน state//
 	int state = 3;
 
-	sf::SoundBuffer music1;
-	if (!music1.loadFromFile("Sound/Powerup!.wav")) {
-		std::cout << "error" << std::endl;
-	}
-	sf::Sound music;
-
+	//render window menu//
 	sf::RenderWindow MENU(sf::VideoMode(640, 640), "Menu", sf::Style::Close);
 	Menu menu(MENU.getSize().x, MENU.getSize().y);
 	bool checkGameOpen = false;
 
+	//sound, music//
+	sf::SoundBuffer music1;
+	if (!music1.loadFromFile("Sound/Powerup!.wav")) {
+		std::cout << "error" << std::endl;
+	}
+
+	//music class//
+	sf::Sound music;
 	music.setBuffer(music1);
 	music.setVolume(40.f);
 	music.setLoop(true);
 	music.play();
-
-	while (MENU.isOpen()) {
-		sf::Event event;
-		while (MENU.pollEvent(event)) {
-			switch (event.type)
-			{
-			case sf::Event::KeyReleased:
-				switch (event.key.code)
-				{
-				case sf::Keyboard::Up:
-					menu.MoveUp();
-					break;
-
-				case sf::Keyboard::Down:
-					menu.MoveDown();
-					break;
-
-				case sf::Keyboard::Return:
-					switch (menu.GetPressedItem())
-					{
-					case 0:
-						std::cout << "Play has been pressed" << std::endl;
-						state = 1;
-						std::cout << "State = " << state << std::endl;
-						checkGameOpen = true;
-						MENU.close();
-						break;
-					case 1:
-						std::cout << "Option has been pressed" << std::endl;
-						state = 2;
-						std::cout << "State = " << state << std::endl;
-						MENU.close();
-						break;
-					case 2:
-						std::cout << "Esc has been pressed";
-						MENU.close();
-						break;
-					}
-				}
-				break;
-			case sf::Event::Closed:
-				MENU.close();
-				break;
-			}
-		}
-		MENU.clear();
-		menu.drawMenu(MENU);
-		MENU.display();
-		if (checkGameOpen == true)
-			break;
-	}
 
 	//ใช้เช็คว่าจบเกมหรือไม่
 	bool game_over = 0;
@@ -141,14 +94,71 @@ int main()
 	previous_time = std::chrono::steady_clock::now();
 
 	sf::Event event;
-	//รับความแตกต่างของเวลาระหว่างเฟรมปัจจุบันและเฟรมก่อนหน้า
-	unsigned delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
+	
 
-	//Add the difference to the lag 
-	lag += delta_time;
+	while (MENU.isOpen()) {
+		//รับความแตกต่างของเวลาระหว่างเฟรมปัจจุบันและเฟรมก่อนหน้า
+		unsigned delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
 
-	//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
-	previous_time += std::chrono::microseconds(delta_time);
+		//Add the difference to the lag 
+		lag += delta_time;
+
+		//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
+		previous_time += std::chrono::microseconds(delta_time);
+
+		while (FRAME_DURATION <= lag)
+		{
+
+			sf::Event event;
+			while (MENU.pollEvent(event)) {
+				switch (event.type)
+				{
+				case sf::Event::KeyReleased:
+					switch (event.key.code)
+					{
+					case sf::Keyboard::Up:
+						menu.MoveUp();
+						break;
+
+					case sf::Keyboard::Down:
+						menu.MoveDown();
+						break;
+
+					case sf::Keyboard::Return:
+						switch (menu.GetPressedItem())
+						{
+						case 0:
+							std::cout << "Play has been pressed" << std::endl;
+							state = 1;
+							std::cout << "State = " << state << std::endl;
+							checkGameOpen = true;
+							MENU.close();
+							break;
+						case 1:
+							std::cout << "How to play has been pressed" << std::endl;
+							state = 2;
+							std::cout << "State = " << state << std::endl;
+							MENU.close();
+							break;
+						case 2:
+							std::cout << "Esc has been pressed";
+							MENU.close();
+							break;
+						}
+					}
+					break;
+				case sf::Event::Closed:
+					MENU.close();
+					break;
+				}
+			}
+			MENU.clear();
+			menu.drawMenu(MENU);
+			MENU.display();
+			if (checkGameOpen == true)
+				break;
+		}
+	}
 
 JumpState:
 	if (state == 1)
@@ -160,8 +170,17 @@ JumpState:
 
 		while (window.isOpen())
 		{
+			//รับความแตกต่างของเวลาระหว่างเฟรมปัจจุบันและเฟรมก่อนหน้า
+			unsigned delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
+
+			//Add the difference to the lag 
+			lag += delta_time;
+
+			//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
+			previous_time += std::chrono::microseconds(delta_time);
+
 			//While the lag exceeds the maximum allowed frame duration
-			while (true)
+			while (FRAME_DURATION <= lag)
 			{
 				//ลบ thing ด้านขวา ออกจากสิ่งด้านซ้าย
 				lag -= FRAME_DURATION;
@@ -449,7 +468,7 @@ JumpState:
 				}
 
 				//drawing everything
-				if (true)
+				if (FRAME_DURATION > lag)
 				{
 					//Calculating the size of the effect squares
 					unsigned char clear_cell_size = static_cast<unsigned char>(2 * round(0.5f * CELL_SIZE * (clear_effect_timer / static_cast<float>(CLEAR_EFFECT_DURATION))));
@@ -575,7 +594,7 @@ JumpState:
 	}
 	if (state == 2)
 	{
-		sf::RenderWindow Option(sf::VideoMode(960, 720), "Option", sf::Style::Close);
+		sf::RenderWindow Option(sf::VideoMode(960, 720), "How to play", sf::Style::Close);
 		while (Option.isOpen())
 		{
 			sf::Event event;
