@@ -4,7 +4,8 @@
 
 void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text, sf::RenderWindow& i_window)
 {
-	//��ҨШѴ��ͤ������Դ���º�
+	
+	//เราจะจัดข้อความให้ชิดซ้ายบน
 	short character_x = i_x;
 	short character_y = i_y;
 
@@ -13,11 +14,11 @@ void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text
 	sf::Sprite character_sprite;
 
 	sf::Texture font_texture;
-	font_texture.loadFromFile("Font/Font.png");
+	font_texture.loadFromFile("C:\\Users\\user\\Downloads\\Tetris-Main\\Source\\Resources\\Images\\Font.png");
 
-	//��ҨФӹǳ�������ҧ�ͧ�ѡ��е����Ҵ�ҾẺ�ѡ��
-	//96 ������ҹ���� 96 ����Ф���Ҿ
-
+	//เราจะคำนวณความกว้างของอักขระตามขนาดภาพแบบอักษร
+	//96 เพราะมี 96 ตัวอักษรในภาพ
+	
 	character_width = font_texture.getSize().x / 96;
 
 	character_sprite.setTexture(font_texture);
@@ -26,22 +27,22 @@ void draw_text(unsigned short i_x, unsigned short i_y, const std::string& i_text
 	{
 		if ('\n' == a)
 		{
-			//After every newline we put increase the y-coordinate and reset the x-coordinate
+			//หลังจากขึ้นบรรทัดใหม่ทุกครั้ง เราเพิ่มพิกัด y และรีเซ็ตพิกัด x
 			character_x = i_x;
 			character_y += font_texture.getSize().y;
 
 			continue;
 		}
 
-		//����¹���˹觢ͧ����ФöѴ�
+		//เปลี่ยนตำแหน่งของตัวละครถัดไป
 		character_sprite.setPosition(character_x, character_y);
-		//���͡����Фèҡ�Ҿ�͹��
+		//เลือกตัวละครจากภาพฟอนต์
 		character_sprite.setTextureRect(sf::IntRect(character_width * (a - 32), 0, character_width, font_texture.getSize().y));
 
-		//�����ԡѴ x
+		//เพิ่มพิกัด x
 		character_x += character_width;
 
-		//�Ҵ����Ф�
+		//วาดตัวละคร
 		i_window.draw(character_sprite);
 	}
 }
