@@ -97,18 +97,6 @@ int main()
 	
 
 	while (MENU.isOpen()) {
-		//รับความแตกต่างของเวลาระหว่างเฟรมปัจจุบันและเฟรมก่อนหน้า
-		unsigned delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
-
-		//Add the difference to the lag 
-		lag += delta_time;
-
-		//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
-		previous_time += std::chrono::microseconds(delta_time);
-
-		while (FRAME_DURATION <= lag)
-		{
-
 			sf::Event event;
 			while (MENU.pollEvent(event)) {
 				switch (event.type)
@@ -157,7 +145,7 @@ int main()
 			MENU.display();
 			if (checkGameOpen == true)
 				break;
-		}
+		
 	}
 
 JumpState:
@@ -595,6 +583,7 @@ JumpState:
 	if (state == 2)
 	{
 		sf::RenderWindow Option(sf::VideoMode(960, 720), "How to play", sf::Style::Close);
+
 		while (Option.isOpen())
 		{
 			sf::Event event;
