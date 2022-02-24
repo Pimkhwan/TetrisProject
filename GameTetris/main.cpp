@@ -45,6 +45,13 @@ int main()
 	Menu_texture.loadFromFile("Texture/Menu.jpg");
 	background_menu.setTexture(&Menu_texture);
 
+	//set bg in Option//
+	RectangleShape background_option;
+	background_option.setSize(Vector2f(960, 720));
+	Texture Option_texture;
+	Option_texture.loadFromFile("Texture/Option.png");
+	background_option.setTexture(&Option_texture);
+
 	//ใช้เช็คว่าจบเกมหรือไม่
 	bool game_over = 0;
 	//ปุ่มฮาร์ดดรอปถูกกดหรือไม่
@@ -615,6 +622,7 @@ JumpState:
 				}
 			}
 			Option.clear();
+			Option.draw(background_option);
 			Option.display();
 		}
 
