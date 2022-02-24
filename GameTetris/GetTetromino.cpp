@@ -2,11 +2,11 @@
 
 #include "Global.h"
 #include "GetTetromino.h"
-
-std::vector<Position> get_tetromino(unsigned char i_shape, unsigned char i_x, unsigned char i_y)
+using namespace std;
+vector<Position> get_tetromino(unsigned char i_shape, unsigned char i_x, unsigned char i_y)
 {
 	//เซ็ต vector 
-	std::vector<Position> output_tetromino(4);
+	vector<Position> output_tetromino(4);
 
 	//กำหนดตำแหน่งสัมพัทธ์ทุกรูปร่าง
 	switch (i_shape)

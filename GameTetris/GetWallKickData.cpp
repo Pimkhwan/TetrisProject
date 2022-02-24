@@ -3,7 +3,9 @@
 #include "Global.h"
 #include "GetWallKickData.h"
 
-std::vector<Position> get_wall_kick_data(bool i_is_i_shape, unsigned char i_current_rotation, unsigned char i_next_rotation)
+using namespace std;
+
+vector<Position> get_wall_kick_data(bool i_is_i_shape, unsigned char i_current_rotation, unsigned char i_next_rotation)
 {
 	//เราส่งคืนข้อมูลการเตะกำแพงตามการหมุนปัจจุบันและครั้งถัดไป นอกจากนี้เรายังตรวจสอบรูปร่างว่าเป็นฉันหรือไม่
 	//ข้อเท็จจริงที่น่าสนุกคือ เว็บไซต์ที่ให้ข้อมูลนั้นมีการพลิกพิกัด y เลย ผมจึงต้องพลิกทุกเครื่องหมายของ y
