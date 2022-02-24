@@ -23,13 +23,12 @@ int main()
 	//render window menu//
 	RenderWindow MENU(VideoMode(640, 640), "Menu", Style::Close);
 	Menu menu(MENU.getSize().x, MENU.getSize().y);
-	
 
 	bool checkGameOpen = false;
 
 	//sound, music//
 	SoundBuffer music1;
-	if (!music1.loadFromFile("Sound/A Night Of Dizzy Spells.wav")) {
+	if (!music1.loadFromFile("Sound/Powerup!.wav")) {
 		cout << "error" << endl;
 	}
 
@@ -132,12 +131,12 @@ int main()
 					break;
 
 				case Keyboard::Return:
-
 					switch (menu.GetPressedItem())
 					{
 					case 0:
 						cout << "Play has been pressed" << endl;
 						state = 1;
+						music.stop();
 						cout << "State = " << state << endl;
 						checkGameOpen = true;
 						MENU.close();
@@ -145,6 +144,7 @@ int main()
 					case 1:
 						cout << "How to play has been pressed" << endl;
 						state = 2;
+						music.stop();
 						cout << "State = " << state << endl;
 						MENU.close();
 						break;
@@ -155,8 +155,8 @@ int main()
 					}
 				}
 				break;
-				case Event::Closed:
-				
+			case Event::Closed:
+
 				MENU.close();
 				break;
 			}
@@ -165,6 +165,7 @@ int main()
 		MENU.draw(background_menu);
 		menu.drawMenu(MENU);
 		MENU.display();
+		//music.setLoop(false);
 		if (checkGameOpen == true)
 			break;
 	}
@@ -176,6 +177,19 @@ JumpState:
 		RenderWindow window(VideoMode(2 * CELL_SIZE * COLUMNS * SCREEN_RESIZE, CELL_SIZE * ROWS * SCREEN_RESIZE), "Tetris", Style::Close);
 		//Resizing the window
 		window.setView(View(FloatRect(0, 0, 2 * CELL_SIZE * COLUMNS, CELL_SIZE * ROWS)));
+
+		//sound, music//
+		SoundBuffer music2;
+		if (!music2.loadFromFile("Sound/A Night Of Dizzy Spells.wav")) {
+			cout << "error" << endl;
+		}
+
+		//music class//
+		Sound music;
+		music.setBuffer(music2);
+		music.setVolume(10.f);
+		music.setLoop(true);
+		music.play();
 
 		while (window.isOpen())
 		{
@@ -604,6 +618,19 @@ JumpState:
 		RenderWindow HTP(VideoMode(960, 720), "How to play", Style::Default);
 		HowtoPlay howto(HTP.getSize().x, HTP.getSize().y);
 
+		//sound, music//
+		SoundBuffer music3;
+		if (!music3.loadFromFile("Sound/Up In My Jam.wav")) {
+			cout << "error" << endl;
+		}
+
+		//music class//
+		Sound music;
+		music.setBuffer(music3);
+		music.setVolume(10.f);
+		music.setLoop(true);
+		music.play();
+
 		while (HTP.isOpen())
 		{
 			Event event;
@@ -617,13 +644,29 @@ JumpState:
 				{
 					if (event.key.code == Keyboard::Enter)
 					{
+						//render window menu//
+						RenderWindow MENU(VideoMode(640, 640), "Menu", Style::Close);
+						Menu menu(MENU.getSize().x, MENU.getSize().y);
+
 						cout << "Open menu in HowtoPlay\n";
+
+						while (MENU.isOpen())
+						{
+
+							cout << "Open open Open\n";
+							MENU.clear();
+							MENU.draw(background_menu);
+							menu.drawMenu(MENU);
+							MENU.display();
+							HTP.close();
+						}
+
 					}
+
 					if (event.key.code == Keyboard::Escape)
 					{
 						cout << "HowtoPlay Close\n";
 						HTP.close();
-						break;
 					}
 				}
 			}
