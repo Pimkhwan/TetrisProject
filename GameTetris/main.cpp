@@ -12,6 +12,7 @@
 #include "Menu.h"
 
 using namespace std;
+using namespace sf;
 
 int main()
 {
@@ -19,23 +20,30 @@ int main()
 	int state = 3;
 
 	//render window menu//
-	sf::RenderWindow MENU(sf::VideoMode(640, 640), "Menu", sf::Style::Close);
+	RenderWindow MENU(VideoMode(640, 640), "Menu", Style::Close);
 	Menu menu(MENU.getSize().x, MENU.getSize().y);
 
 	bool checkGameOpen = false;
 
 	//sound, music//
-	sf::SoundBuffer music1;
+	SoundBuffer music1;
 	if (!music1.loadFromFile("Sound/Powerup!.wav")) {
 		cout << "error" << endl;
 	}
 
 	//music class//
-	sf::Sound music;
+	Sound music;
 	music.setBuffer(music1);
 	music.setVolume(40.f);
 	music.setLoop(true);
 	music.play();
+
+	//set bg in menu//
+	RectangleShape background_menu;
+	background_menu.setSize(Vector2f(640, 640));
+	Texture Menu_texture;
+	Menu_texture.loadFromFile("Texture/Menu.jpg");
+	background_menu.setTexture(&Menu_texture);
 
 	//ใช้เช็คว่าจบเกมหรือไม่
 	bool game_over = 0;
@@ -72,16 +80,16 @@ int main()
 	vector<bool> clear_lines(ROWS, 0);
 
 	//รหัสสีสำหรับเซลล์
-	vector<sf::Color> cell_colors = {
-		sf::Color(36, 36, 85),
-		sf::Color(0, 219, 255),
-		sf::Color(0, 36, 255),
-		sf::Color(255, 146, 0),
-		sf::Color(255, 219, 0),
-		sf::Color(0, 219, 0),
-		sf::Color(146, 0, 255),
-		sf::Color(219, 0, 0),
-		sf::Color(73, 73, 85)
+	vector<Color> cell_colors = {
+		Color(36, 36, 85),
+		Color(0, 219, 255),
+		Color(0, 36, 255),
+		Color(255, 146, 0),
+		Color(255, 219, 0),
+		Color(0, 219, 0),
+		Color(146, 0, 255),
+		Color(219, 0, 0),
+		Color(73, 73, 85)
 	};
 
 	//เกมเมทริกซ์ ทุกอย่างจะเกิดขึ้นกับเมทริกซ์นี้
@@ -96,25 +104,25 @@ int main()
 	//รับเวลาปัจจุบันและเก็บไว้ในตัวแปร
 	previous_time = chrono::steady_clock::now();
 
-	sf::Event event;
+	Event event;
 
 	while (MENU.isOpen()) {
-		sf::Event event;
+		Event event;
 		while (MENU.pollEvent(event)) {
 			switch (event.type)
 			{
-			case sf::Event::KeyReleased:
+			case Event::KeyReleased:
 				switch (event.key.code)
 				{
-				case sf::Keyboard::Up:
+				case Keyboard::Up:
 					menu.MoveUp();
 					break;
 
-				case sf::Keyboard::Down:
+				case Keyboard::Down:
 					menu.MoveDown();
 					break;
 
-				case sf::Keyboard::Return:
+				case Keyboard::Return:
 					switch (menu.GetPressedItem())
 					{
 					case 0:
@@ -137,26 +145,26 @@ int main()
 					}
 				}
 				break;
-				case sf::Event::Closed:
+				case Event::Closed:
 				MENU.close();
 				break;
 			}
 		}
 		MENU.clear();
+		MENU.draw(background_menu);
 		menu.drawMenu(MENU);
 		MENU.display();
 		if (checkGameOpen == true)
 			break;
-
 	}
 
 JumpState:
 	if (state == 1)
 	{
 		//Window
-		sf::RenderWindow window(sf::VideoMode(2 * CELL_SIZE * COLUMNS * SCREEN_RESIZE, CELL_SIZE * ROWS * SCREEN_RESIZE), "Tetris", sf::Style::Close);
+		RenderWindow window(VideoMode(2 * CELL_SIZE * COLUMNS * SCREEN_RESIZE, CELL_SIZE * ROWS * SCREEN_RESIZE), "Tetris", Style::Close);
 		//Resizing the window
-		window.setView(sf::View(sf::FloatRect(0, 0, 2 * CELL_SIZE * COLUMNS, CELL_SIZE * ROWS)));
+		window.setView(View(FloatRect(0, 0, 2 * CELL_SIZE * COLUMNS, CELL_SIZE * ROWS)));
 
 		while (window.isOpen())
 		{
@@ -188,7 +196,7 @@ JumpState:
 						break;
 
 						//เคศยูสเซอร์ปิดตัวเกม
-					case sf::Event::Closed:
+					case Event::Closed:
 					{
 						//ปิดวินโดว์
 						window.close();
@@ -196,14 +204,14 @@ JumpState:
 						break;
 					}
 					//เคส key 
-					case sf::Event::KeyReleased:
+					case Event::KeyReleased:
 					{
 						//เช็คว่า key อะไร
 						switch (event.key.code)
 						{
 							//เคส C or Z
-						case sf::Keyboard::C:
-						case sf::Keyboard::Z:
+						case Keyboard::C:
+						case Keyboard::Z:
 						{
 							//เซ็ตปุ่มหมุน
 							rotate_pressed = 0;
@@ -211,22 +219,22 @@ JumpState:
 							break;
 						}
 						//เคสปุ่ม Down
-						case sf::Keyboard::Down:
+						case Keyboard::Down:
 						{
 							//รีเซ็ตตัวจับเวลาแบบซอฟต์ดร็อป
 							soft_drop_timer = 0;
 							break;
 						}
 						//เคส key ซ้ายหรือขวา
-						case sf::Keyboard::Left:
-						case sf::Keyboard::Right:
+						case Keyboard::Left:
+						case Keyboard::Right:
 						{
 							//รีเซ็ตตัวจับเวลาการย้าย
 							move_timer = 0;
 							break;
 						}
 						//เคสปุ่ม space
-						case sf::Keyboard::Space:
+						case Keyboard::Space:
 						{
 							//ปุ่มฮาร์ดดรอปไม่ได้ถูกกด
 							hard_drop_pressed = 0;
@@ -246,7 +254,7 @@ JumpState:
 						if (0 == rotate_pressed)
 						{
 							//ถ้า C is pressed
-							if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+							if (1 == Keyboard::isKeyPressed(Keyboard::C))
 							{
 								//Rotation key is pressed
 								rotate_pressed = 1;
@@ -254,7 +262,7 @@ JumpState:
 								//Do a barrel roll
 								tetromino.rotate(1, matrix);
 							} //Else, if the Z is pressed
-							else if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+							else if (1 == Keyboard::isKeyPressed(Keyboard::Z))
 							{
 								//Rotation key is pressed!
 								rotate_pressed = 1;
@@ -268,7 +276,7 @@ JumpState:
 						if (0 == move_timer)
 						{
 							//ถ้า the Left is pressed
-							if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+							if (1 == Keyboard::isKeyPressed(Keyboard::Left))
 							{
 								//Reset the move timer
 								move_timer = 1;
@@ -276,7 +284,7 @@ JumpState:
 								//Move the tetromino to the left
 								tetromino.move_left(matrix);
 							}
-							else if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+							else if (1 == Keyboard::isKeyPressed(Keyboard::Right))
 							{
 								//Reset the move timer
 								move_timer = 1;
@@ -295,7 +303,7 @@ JumpState:
 						if (0 == hard_drop_pressed)
 						{
 							//แต่กด Space แล้วอันไหนคือคีย์ฮาร์ดดร็อป (Paradox?)
-							if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+							if (1 == Keyboard::isKeyPressed(Keyboard::Space))
 							{
 								//กำหนดค่า hard drop!
 								hard_drop_pressed = 1;
@@ -311,7 +319,7 @@ JumpState:
 						//คล้าย hard drop แต่เปลี่ยนเป็น soft drop
 						if (0 == soft_drop_timer)
 						{
-							if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+							if (1 == Keyboard::isKeyPressed(Keyboard::Down))
 							{
 								if (1 == tetromino.move_down(matrix))
 								{
@@ -394,7 +402,7 @@ JumpState:
 							fall_timer++;
 						}
 					} //restarting the game
-					else if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+					else if (1 == Keyboard::isKeyPressed(Keyboard::Enter))
 					{
 						//We set everything to 0
 						game_over = 0;
@@ -462,10 +470,10 @@ JumpState:
 					unsigned char clear_cell_size = static_cast<unsigned char>(2 * round(0.5f * CELL_SIZE * (clear_effect_timer / static_cast<float>(CLEAR_EFFECT_DURATION))));
 
 					//We're gonna use this object to draw every cell in the game
-					sf::RectangleShape cell(sf::Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
+					RectangleShape cell(Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
 					//Next shape preview border (White square at the corner)
-					sf::RectangleShape preview_border(sf::Vector2f(5 * CELL_SIZE, 5 * CELL_SIZE));
-					preview_border.setFillColor(sf::Color(0, 0, 0));
+					RectangleShape preview_border(Vector2f(5 * CELL_SIZE, 5 * CELL_SIZE));
+					preview_border.setFillColor(Color(0, 0, 0));
 					preview_border.setOutlineThickness(-1);
 					preview_border.setPosition(CELL_SIZE * (1.5f * COLUMNS - 2.5f), CELL_SIZE * (0.25f * ROWS - 2.5f));
 
@@ -529,13 +537,13 @@ JumpState:
 							{
 								cell.setFillColor(cell_colors[0]);
 								cell.setPosition(static_cast<float>(CELL_SIZE * a), static_cast<float>(CELL_SIZE * b));
-								cell.setSize(sf::Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
+								cell.setSize(Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
 
 								window.draw(cell);
 
-								cell.setFillColor(sf::Color(255, 255, 255));
+								cell.setFillColor(Color(255, 255, 255));
 								cell.setPosition(floor(CELL_SIZE * (0.5f + a) - 0.5f * clear_cell_size), floor(CELL_SIZE * (0.5f + b) - 0.5f * clear_cell_size));
-								cell.setSize(sf::Vector2f(clear_cell_size, clear_cell_size));
+								cell.setSize(Vector2f(clear_cell_size, clear_cell_size));
 
 								window.draw(cell);
 							}
@@ -544,7 +552,7 @@ JumpState:
 
 					//Fanuitemg iow gfnreuignoei gnrign yerashr trujngfipoag
 					cell.setFillColor(cell_colors[1 + next_shape]);
-					cell.setSize(sf::Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
+					cell.setSize(Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
 
 					//Draw the preview border
 					window.draw(preview_border);
@@ -582,24 +590,24 @@ JumpState:
 	}
 	if (state == 2)
 	{
-		sf::RenderWindow Option(sf::VideoMode(960, 720), "How to play", sf::Style::Default);
+		RenderWindow Option(VideoMode(960, 720), "How to play", Style::Default);
 
 		while (Option.isOpen())
 		{
-			sf::Event event;
+			Event event;
 			if (Option.pollEvent(event))
 			{
-				if (event.type == sf::Event::Closed)
+				if (event.type == Event::Closed)
 				{
 					Option.close();
 				}
-				if (event.type == sf::Event::KeyPressed)
+				if (event.type == Event::KeyPressed)
 				{
-					if (event.key.code == sf::Keyboard::Space)
+					if (event.key.code == Keyboard::Space)
 					{
 						cout << "Open menu in option\n";
 					}
-					if (event.key.code == sf::Keyboard::Escape)
+					if (event.key.code == Keyboard::Escape)
 					{
 						cout << "Option Close\n";
 						Option.close();
