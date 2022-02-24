@@ -10,6 +10,7 @@
 #include "GetWallKickData.h"
 #include "Tetromino.h"
 #include "Menu.h"
+#include "HowtoPlay.h"
 
 using namespace std;
 using namespace sf;
@@ -27,14 +28,14 @@ int main()
 
 	//sound, music//
 	SoundBuffer music1;
-	if (!music1.loadFromFile("Sound/Powerup!.wav")) {
+	if (!music1.loadFromFile("Sound/A Night Of Dizzy Spells.wav")) {
 		cout << "error" << endl;
 	}
 
 	//music class//
 	Sound music;
 	music.setBuffer(music1);
-	music.setVolume(40.f);
+	music.setVolume(10.f);
 	music.setLoop(true);
 	music.play();
 
@@ -153,6 +154,7 @@ int main()
 				}
 				break;
 				case Event::Closed:
+				
 				MENU.close();
 				break;
 			}
@@ -161,6 +163,7 @@ int main()
 		MENU.draw(background_menu);
 		menu.drawMenu(MENU);
 		MENU.display();
+		//music.setLoop(false);
 		if (checkGameOpen == true)
 			break;
 	}
@@ -597,33 +600,35 @@ JumpState:
 	}
 	if (state == 2)
 	{
-		RenderWindow Option(VideoMode(960, 720), "How to play", Style::Default);
+		RenderWindow HTP(VideoMode(960, 720), "How to play", Style::Default);
+		HowtoPlay howto(HTP.getSize().x, HTP.getSize().y);
 
-		while (Option.isOpen())
+		while (HTP.isOpen())
 		{
 			Event event;
-			if (Option.pollEvent(event))
+			if (HTP.pollEvent(event))
 			{
 				if (event.type == Event::Closed)
 				{
-					Option.close();
+					HTP.close();
 				}
 				if (event.type == Event::KeyPressed)
 				{
-					if (event.key.code == Keyboard::Space)
+					if (event.key.code == Keyboard::Enter)
 					{
-						cout << "Open menu in option\n";
+						cout << "Open menu in HowtoPlay\n";
 					}
 					if (event.key.code == Keyboard::Escape)
 					{
-						cout << "Option Close\n";
-						Option.close();
+						cout << "HowtoPlay Close\n";
+						HTP.close();
 					}
 				}
 			}
-			Option.clear();
-			Option.draw(background_option);
-			Option.display();
+			HTP.clear();
+			HTP.draw(background_option);
+			howto.drawHowtoPlay(HTP);
+			HTP.display();
 		}
 
 	}
