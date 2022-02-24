@@ -5,7 +5,9 @@
 #include "GetWallKickData.h"
 #include "Tetromino.h"
 
-Tetromino::Tetromino(unsigned char i_shape, const std::vector<std::vector<unsigned char>>& i_matrix) :
+using namespace std;
+
+Tetromino::Tetromino(unsigned char i_shape, const vector<vector<unsigned char>>& i_matrix) :
 	rotation(0),
 	shape(i_shape),
 	minos(get_tetromino(i_shape, COLUMNS / 2, 1))
@@ -13,7 +15,7 @@ Tetromino::Tetromino(unsigned char i_shape, const std::vector<std::vector<unsign
 	
 }
 
-bool Tetromino::move_down(const std::vector<std::vector<unsigned char>>& i_matrix)
+bool Tetromino::move_down(const vector<vector<unsigned char>>& i_matrix)
 {
 	for (Position& mino : minos)
 	{
@@ -40,7 +42,7 @@ bool Tetromino::move_down(const std::vector<std::vector<unsigned char>>& i_matri
 	return 1;
 }
 
-bool Tetromino::reset(unsigned char i_shape, const std::vector<std::vector<unsigned char>>& i_matrix)
+bool Tetromino::reset(unsigned char i_shape, const vector<vector<unsigned char>>& i_matrix)
 {
 	//รีเซ็ตตัวแปร
 	rotation = 0;
@@ -67,13 +69,13 @@ unsigned char Tetromino::get_shape()
 	return shape;
 }
 
-void Tetromino::hard_drop(const std::vector<std::vector<unsigned char>>& i_matrix)
+void Tetromino::hard_drop(const vector<vector<unsigned char>>& i_matrix)
 {
 	//ฉันฉลาดมาก ฉันใช้ฟังก์ชัน ghost tetromino เพื่อสร้างฟังก์ชันฮาร์ดดร็อป
 	minos = get_ghost_minos(i_matrix);
 }
 
-void Tetromino::move_left(const std::vector<std::vector<unsigned char>>& i_matrix)
+void Tetromino::move_left(const vector<vector<unsigned char>>& i_matrix)
 {
 	//มันคล้ายกับฟังก์ชั่นเลื่อนลง ดังนั้นฉันจะไม่อธิบายอะไรที่นี่ กัดฉัน!
 	for (Position& mino : minos)
@@ -99,7 +101,7 @@ void Tetromino::move_left(const std::vector<std::vector<unsigned char>>& i_matri
 	}
 }
 
-void Tetromino::move_right(const std::vector<std::vector<unsigned char>>& i_matrix)
+void Tetromino::move_right(const vector<vector<unsigned char>>& i_matrix)
 {
 	//สวัสดี!
 	for (Position& mino : minos)
@@ -125,14 +127,14 @@ void Tetromino::move_right(const std::vector<std::vector<unsigned char>>& i_matr
 	}
 }
 
-void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned char>>& i_matrix)
+void Tetromino::rotate(bool i_clockwise, const vector<vector<unsigned char>>& i_matrix)
 {
 	//ฉันไม่อยากอธิบายเรื่องนี้ ฉันใช้เวลามากเกินไปในการเขียนสิ่งนี้
 	if (3 != shape)
 	{
 		unsigned char next_rotation;
 
-		std::vector<Position> current_minos = minos;
+		vector<Position> current_minos = minos;
 
 		//กำลังคำนวณสถานะการหมุนครั้งต่อไป
 		if (0 == i_clockwise)
@@ -266,7 +268,7 @@ void Tetromino::rotate(bool i_clockwise, const std::vector<std::vector<unsigned 
 	}
 }
 
-void Tetromino::update_matrix(std::vector<std::vector<unsigned char>>& i_matrix)
+void Tetromino::update_matrix(vector<vector<unsigned char>>& i_matrix)
 {
 	//การใส่ tetromino ให้กับเมทริกซ์
 	for (Position& mino : minos)
@@ -280,14 +282,14 @@ void Tetromino::update_matrix(std::vector<std::vector<unsigned char>>& i_matrix)
 	}
 }
 
-std::vector<Position> Tetromino::get_ghost_minos(const std::vector<std::vector<unsigned char>>& i_matrix)
+vector<Position> Tetromino::get_ghost_minos(const vector<vector<unsigned char>>& i_matrix)
 {
 	//เราแค่ขยับเทโทรมิโนลงไป จนกว่ามันจะกระทบอะไรบางอย่าง แล้วเราก็คืนตำแหน่ง
 	bool keep_falling = 1;
 
 	unsigned char total_movement = 0;
 
-	std::vector<Position> ghost_minos = minos;
+	vector<Position> ghost_minos = minos;
 
 	while (1 == keep_falling)
 	{
@@ -323,7 +325,7 @@ std::vector<Position> Tetromino::get_ghost_minos(const std::vector<std::vector<u
 	return ghost_minos;
 }
 
-std::vector<Position> Tetromino::get_minos()
+vector<Position> Tetromino::get_minos()
 {
 	//คืนมิโน
 	return minos;
