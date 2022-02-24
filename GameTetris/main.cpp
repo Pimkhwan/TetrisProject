@@ -11,6 +11,8 @@
 #include "Tetromino.h"
 #include "Menu.h"
 
+using namespace std;
+
 int main()
 {
 	//จำนวน state//
@@ -19,12 +21,13 @@ int main()
 	//render window menu//
 	sf::RenderWindow MENU(sf::VideoMode(640, 640), "Menu", sf::Style::Close);
 	Menu menu(MENU.getSize().x, MENU.getSize().y);
+
 	bool checkGameOpen = false;
 
 	//sound, music//
 	sf::SoundBuffer music1;
 	if (!music1.loadFromFile("Sound/Powerup!.wav")) {
-		std::cout << "error" << std::endl;
+		cout << "error" << endl;
 	}
 
 	//music class//
@@ -57,19 +60,19 @@ int main()
 	//ตัวจับเวลาสำหรับ soft drop tetromino
 	unsigned char soft_drop_timer = 0;
 	//คล้ายกับแลค ใช้เพื่อทำให้เฟรมเรทของเกมเป็นอิสระ
-	std::chrono::time_point<std::chrono::steady_clock> previous_time;
+	chrono::time_point<chrono::steady_clock> previous_time;
 	//สุ่มอุปกรณ์
-	std::random_device random_device;
+	random_device random_device;
 	//Random engine
-	std::default_random_engine random_engine(random_device());
+	default_random_engine random_engine(random_device());
 	//กระจายทุกรูปทรง เราจะสุ่มเลือก
-	std::uniform_int_distribution<unsigned short> shape_distribution(0, 6);
+	uniform_int_distribution<unsigned short> shape_distribution(0, 6);
 
 	//เก็บสถานะปัจจุบันของแต่ละแถว ไม่ว่าจะต้องเคลียร์หรือไม่
-	std::vector<bool> clear_lines(ROWS, 0);
+	vector<bool> clear_lines(ROWS, 0);
 
 	//รหัสสีสำหรับเซลล์
-	std::vector<sf::Color> cell_colors = {
+	vector<sf::Color> cell_colors = {
 		sf::Color(36, 36, 85),
 		sf::Color(0, 219, 255),
 		sf::Color(0, 36, 255),
@@ -82,7 +85,7 @@ int main()
 	};
 
 	//เกมเมทริกซ์ ทุกอย่างจะเกิดขึ้นกับเมทริกซ์นี้
-	std::vector<std::vector<unsigned char>> matrix(COLUMNS, std::vector<unsigned char>(ROWS));
+	vector<vector<unsigned char>> matrix(COLUMNS, vector<unsigned char>(ROWS));
 
 	//tetromino ที่ตกมาในตอนแรกเราจะสุ่มรูปร่างให้
 	Tetromino tetromino(static_cast<unsigned char>(shape_distribution(random_engine)), matrix);
@@ -91,61 +94,60 @@ int main()
 	next_shape = static_cast<unsigned char>(shape_distribution(random_engine));
 
 	//รับเวลาปัจจุบันและเก็บไว้ในตัวแปร
-	previous_time = std::chrono::steady_clock::now();
+	previous_time = chrono::steady_clock::now();
 
 	sf::Event event;
-	
 
 	while (MENU.isOpen()) {
-			sf::Event event;
-			while (MENU.pollEvent(event)) {
-				switch (event.type)
+		sf::Event event;
+		while (MENU.pollEvent(event)) {
+			switch (event.type)
+			{
+			case sf::Event::KeyReleased:
+				switch (event.key.code)
 				{
-				case sf::Event::KeyReleased:
-					switch (event.key.code)
+				case sf::Keyboard::Up:
+					menu.MoveUp();
+					break;
+
+				case sf::Keyboard::Down:
+					menu.MoveDown();
+					break;
+
+				case sf::Keyboard::Return:
+					switch (menu.GetPressedItem())
 					{
-					case sf::Keyboard::Up:
-						menu.MoveUp();
+					case 0:
+						cout << "Play has been pressed" << endl;
+						state = 1;
+						cout << "State = " << state << endl;
+						checkGameOpen = true;
+						MENU.close();
 						break;
-
-					case sf::Keyboard::Down:
-						menu.MoveDown();
+					case 1:
+						cout << "How to play has been pressed" << endl;
+						state = 2;
+						cout << "State = " << state << endl;
+						MENU.close();
 						break;
-
-					case sf::Keyboard::Return:
-						switch (menu.GetPressedItem())
-						{
-						case 0:
-							std::cout << "Play has been pressed" << std::endl;
-							state = 1;
-							std::cout << "State = " << state << std::endl;
-							checkGameOpen = true;
-							MENU.close();
-							break;
-						case 1:
-							std::cout << "How to play has been pressed" << std::endl;
-							state = 2;
-							std::cout << "State = " << state << std::endl;
-							MENU.close();
-							break;
-						case 2:
-							std::cout << "Esc has been pressed";
-							MENU.close();
-							break;
-						}
+					case 2:
+						cout << "Esc has been pressed";
+						MENU.close();
+						break;
 					}
-					break;
-				case sf::Event::Closed:
-					MENU.close();
-					break;
 				}
-			}
-			MENU.clear();
-			menu.drawMenu(MENU);
-			MENU.display();
-			if (checkGameOpen == true)
 				break;
-		
+				case sf::Event::Closed:
+				MENU.close();
+				break;
+			}
+		}
+		MENU.clear();
+		menu.drawMenu(MENU);
+		MENU.display();
+		if (checkGameOpen == true)
+			break;
+
 	}
 
 JumpState:
@@ -159,13 +161,13 @@ JumpState:
 		while (window.isOpen())
 		{
 			//รับความแตกต่างของเวลาระหว่างเฟรมปัจจุบันและเฟรมก่อนหน้า
-			unsigned delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
+			unsigned delta_time = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - previous_time).count();
 
 			//Add the difference to the lag 
 			lag += delta_time;
 
 			//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
-			previous_time += std::chrono::microseconds(delta_time);
+			previous_time += chrono::microseconds(delta_time);
 
 			//While the lag exceeds the maximum allowed frame duration
 			while (FRAME_DURATION <= lag)
@@ -213,7 +215,6 @@ JumpState:
 						{
 							//รีเซ็ตตัวจับเวลาแบบซอฟต์ดร็อป
 							soft_drop_timer = 0;
-
 							break;
 						}
 						//เคส key ซ้ายหรือขวา
@@ -222,7 +223,6 @@ JumpState:
 						{
 							//รีเซ็ตตัวจับเวลาการย้าย
 							move_timer = 0;
-
 							break;
 						}
 						//เคสปุ่ม space
@@ -368,7 +368,7 @@ JumpState:
 										if (0 == lines_cleared % LINES_TO_INCREASE_SPEED)
 										{
 											//increase the game speed
-											current_fall_speed = std::max<unsigned char>(SOFT_DROP_SPEED, current_fall_speed - 1);
+											current_fall_speed = max<unsigned char>(SOFT_DROP_SPEED, current_fall_speed - 1);
 										}
 									}
 								}
@@ -410,9 +410,9 @@ JumpState:
 						soft_drop_timer = 0;
 
 						//clear the matrix
-						for (std::vector<unsigned char>& a : matrix)
+						for (vector<unsigned char>& a : matrix)
 						{
-							std::fill(a.begin(), a.end(), 0);
+							fill(a.begin(), a.end(), 0);
 						}
 					}
 				}
@@ -451,7 +451,7 @@ JumpState:
 						next_shape = static_cast<unsigned char>(shape_distribution(random_engine));
 
 						//Clear the clear lines array
-						std::fill(clear_lines.begin(), clear_lines.end(), 0);
+						fill(clear_lines.begin(), clear_lines.end(), 0);
 					}
 				}
 
@@ -571,7 +571,7 @@ JumpState:
 					}
 
 					//draw text
-					draw_text(static_cast<unsigned short>(CELL_SIZE * (0.5f + COLUMNS)), static_cast<unsigned short>(0.5f * CELL_SIZE * ROWS), "Lines:" + std::to_string(lines_cleared) + "\nSpeed:" + std::to_string(START_FALL_SPEED / current_fall_speed) + 'x', window);
+					draw_text(static_cast<unsigned short>(CELL_SIZE * (0.5f + COLUMNS)), static_cast<unsigned short>(0.5f * CELL_SIZE * ROWS), "Lines:" + to_string(lines_cleared) + "\nSpeed:" + to_string(START_FALL_SPEED / current_fall_speed) + 'x', window);
 
 					window.display();
 
@@ -582,7 +582,7 @@ JumpState:
 	}
 	if (state == 2)
 	{
-		sf::RenderWindow Option(sf::VideoMode(960, 720), "How to play", sf::Style::Close);
+		sf::RenderWindow Option(sf::VideoMode(960, 720), "How to play", sf::Style::Default);
 
 		while (Option.isOpen())
 		{
@@ -595,19 +595,21 @@ JumpState:
 				}
 				if (event.type == sf::Event::KeyPressed)
 				{
+					if (event.key.code == sf::Keyboard::Space)
+					{
+						cout << "Open menu in option\n";
+					}
 					if (event.key.code == sf::Keyboard::Escape)
 					{
+						cout << "Option Close\n";
 						Option.close();
 					}
 				}
 			}
-			MENU.close();
 			Option.clear();
 			Option.display();
 		}
 
 	}
-
-
 	return 0;
 }
