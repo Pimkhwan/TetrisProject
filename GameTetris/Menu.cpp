@@ -1,9 +1,11 @@
 #include "Menu.h"
 #include <iostream>
 
+using namespace std;
+
 Menu::Menu(float width, float height) {
 	if (!font.loadFromFile("Font/AGoblinAppears-o2aV.ttf")) {
-		std::cout << "No font is here";
+		cout << "No font is here";
 	}
 	//Play
 	menu[0].setFont(font);
