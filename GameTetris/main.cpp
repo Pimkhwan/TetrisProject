@@ -23,6 +23,7 @@ int main()
 	//render window menu//
 	RenderWindow MENU(VideoMode(640, 640), "Menu", Style::Close);
 	Menu menu(MENU.getSize().x, MENU.getSize().y);
+	
 
 	bool checkGameOpen = false;
 
@@ -131,6 +132,7 @@ int main()
 					break;
 
 				case Keyboard::Return:
+
 					switch (menu.GetPressedItem())
 					{
 					case 0:
@@ -163,7 +165,6 @@ int main()
 		MENU.draw(background_menu);
 		menu.drawMenu(MENU);
 		MENU.display();
-		//music.setLoop(false);
 		if (checkGameOpen == true)
 			break;
 	}
@@ -622,6 +623,7 @@ JumpState:
 					{
 						cout << "HowtoPlay Close\n";
 						HTP.close();
+						break;
 					}
 				}
 			}
