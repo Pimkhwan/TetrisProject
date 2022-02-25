@@ -31,14 +31,14 @@ HowtoPlay::HowtoPlay(float width, float height) {
 
 	howto[3].setFont(font);
 	howto[3].setFillColor(sf::Color::White);
-	howto[3].setString("Press space bar if you sure...............");
+	howto[3].setString("Press space bar if you sure to drop very fast");
 	howto[3].setCharacterSize(16);
 	howto[3].setOrigin(howto[0].getLocalBounds().width / 2, howto[0].getLocalBounds().height / 2);
 	howto[3].setPosition(sf::Vector2f(width / 3, height / (MAX_ITEM + 1) * 4));
 
 	howto[4].setFont(font);
 	howto[4].setFillColor(sf::Color::White);
-	howto[4].setString("Press Z and C if you want to ...........");
+	howto[4].setString("Press Z and C if you want to change a shape 90° to right or left");
 	howto[4].setCharacterSize(16);
 	howto[4].setOrigin(howto[0].getLocalBounds().width / 2, howto[0].getLocalBounds().height / 2);
 	howto[4].setPosition(sf::Vector2f(width / 3, height / (MAX_ITEM + 1) * 5));
