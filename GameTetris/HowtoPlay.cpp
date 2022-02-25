@@ -24,21 +24,21 @@ HowtoPlay::HowtoPlay(float width, float height) {
 
 	howto[2].setFont(font);
 	howto[2].setFillColor(sf::Color::White);
-	howto[2].setString("Down is blablabla................");
+	howto[2].setString("Down is to move down little by little");
 	howto[2].setCharacterSize(16);
 	howto[2].setOrigin(howto[0].getLocalBounds().width / 2, howto[0].getLocalBounds().height / 2);
 	howto[2].setPosition(sf::Vector2f(width / 3, height / (MAX_ITEM + 1) * 3));
 
 	howto[3].setFont(font);
 	howto[3].setFillColor(sf::Color::White);
-	howto[3].setString("Press space bar if you sure...............");
+	howto[3].setString("Press Spacebar you sure it is in the desired position.");
 	howto[3].setCharacterSize(16);
 	howto[3].setOrigin(howto[0].getLocalBounds().width / 2, howto[0].getLocalBounds().height / 2);
 	howto[3].setPosition(sf::Vector2f(width / 3, height / (MAX_ITEM + 1) * 4));
 
 	howto[4].setFont(font);
 	howto[4].setFillColor(sf::Color::White);
-	howto[4].setString("Press Z and C if you want to ...........");
+	howto[4].setString("Z and C is rotation");
 	howto[4].setCharacterSize(16);
 	howto[4].setOrigin(howto[0].getLocalBounds().width / 2, howto[0].getLocalBounds().height / 2);
 	howto[4].setPosition(sf::Vector2f(width / 3, height / (MAX_ITEM + 1) * 5));
