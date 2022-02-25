@@ -38,7 +38,7 @@ HowtoPlay::HowtoPlay(float width, float height) {
 
 	howto[4].setFont(font);
 	howto[4].setFillColor(sf::Color::White);
-	howto[4].setString("Press Z and C if you want to change a shape 90° to right or left");
+	howto[4].setString("Press Z and C is rotation");
 	howto[4].setCharacterSize(16);
 	howto[4].setOrigin(howto[0].getLocalBounds().width / 2, howto[0].getLocalBounds().height / 2);
 	howto[4].setPosition(sf::Vector2f(width / 3, height / (MAX_ITEM + 1) * 5));
