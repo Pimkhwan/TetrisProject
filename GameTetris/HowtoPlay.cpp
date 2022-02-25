@@ -24,7 +24,7 @@ HowtoPlay::HowtoPlay(float width, float height) {
 
 	howto[2].setFont(font);
 	howto[2].setFillColor(sf::Color::White);
-	howto[2].setString("Down is blablabla................");
+	howto[2].setString("Down is drop termino normal");
 	howto[2].setCharacterSize(16);
 	howto[2].setOrigin(howto[0].getLocalBounds().width / 2, howto[0].getLocalBounds().height / 2);
 	howto[2].setPosition(sf::Vector2f(width / 3, height / (MAX_ITEM + 1) * 3));
