@@ -202,7 +202,7 @@ JumpState:
 			//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
 			previous_time += chrono::microseconds(delta_time);
 
-			//While the lag exceeds the maximum allowed frame duration
+			//ในขณะที่ความล่าช้าเกินระยะเวลาเฟรมสูงสุดที่อนุญาต
 			while (FRAME_DURATION <= lag)
 			{
 				//ลบ thing ด้านขวา ออกจากสิ่งด้านซ้าย
