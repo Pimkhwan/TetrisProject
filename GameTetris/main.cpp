@@ -35,7 +35,7 @@ int main()
 	//music class//
 	Sound music;
 	music.setBuffer(music1);
-	music.setVolume(10.f);
+	music.setVolume(40.f);
 	music.setLoop(true);
 	music.play();
 
@@ -202,7 +202,7 @@ JumpState:
 			//อัพเดทเวลาปัจจุบันกับเฟรมถัดไป
 			previous_time += chrono::microseconds(delta_time);
 
-			//While the lag exceeds the maximum allowed frame duration
+			//ในขณะที่ความล่าช้าเกินระยะเวลาเฟรมสูงสุดที่อนุญาต
 			while (FRAME_DURATION <= lag)
 			{
 				//ลบ thing ด้านขวา ออกจากสิ่งด้านซ้าย
@@ -409,8 +409,6 @@ JumpState:
 								//If the effect timer is over
 								if (0 == clear_effect_timer)
 								{
-									//Decide if the game is over or not based on the return value of the reset function
-									//Yes I know I could use "!" but it looks ugly and I hate using it!
 									game_over = 0 == tetromino.reset(next_shape, matrix);
 
 									//Generate the next shape
@@ -457,7 +455,7 @@ JumpState:
 					//If the effect timer is between 1 and -1
 					if (0 == clear_effect_timer)
 					{
-						//Loop through each row
+						//วนซ้ำแต่ละแถว
 						for (unsigned char a = 0; a < ROWS; a++)
 						{
 							//If the row should be cleared
@@ -575,7 +573,6 @@ JumpState:
 						}
 					}
 
-					//Fanuitemg iow gfnreuignoei gnrign yerashr trujngfipoag
 					cell.setFillColor(cell_colors[1 + next_shape]);
 					cell.setSize(Vector2f(CELL_SIZE - 1, CELL_SIZE - 1));
 
